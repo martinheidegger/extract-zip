@@ -1,6 +1,6 @@
 {
   "name": "@leichtgewicht/extract-zip",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "unzip a zip file into a directory using 100% javascript",
   "main": "index.js",
   "types": "index.d.ts",
