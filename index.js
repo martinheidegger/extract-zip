@@ -3,7 +3,7 @@ const debug = require('debug')('extract-zip')
 const { createWriteStream, promises: fs } = require('fs')
 const getStream = require('get-stream')
 const path = require('path')
-const { promisify } = require('util')
+const { promisify, TextDecoder } = require('util')
 const stream = require('stream')
 const yauzl = require('yauzl')
 
