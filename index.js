@@ -14,12 +14,13 @@ class Extractor {
   constructor (zipPath, opts) {
     this.zipPath = zipPath
     this.opts = opts
+    this.decoder = new TextDecoder(opts.encoding)
   }
 
   async extract () {
     debug('opening', this.zipPath, 'with opts', this.opts)
 
-    this.zipfile = await openZip(this.zipPath, { lazyEntries: true })
+    this.zipfile = await openZip(this.zipPath, { lazyEntries: true, decodeStrings: false })
     this.canceled = false
 
     return new Promise((resolve, reject) => {
@@ -37,6 +38,9 @@ class Extractor {
       })
 
       this.zipfile.on('entry', async entry => {
+        entry.fileName = this.decoder.decode(entry.fileName)
+        entry.fileNameLength = entry.fileName.length
+
         if (this.opts.filter) {
           if (!this.opts.filter(entry, this.zipfile)) {
             this.zipfile.readEntry()
